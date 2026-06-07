@@ -14,7 +14,7 @@ model User {
   emailVerified DateTime?
   password      String?
   image         String?
-  role          String    @default("member") // admin | power_user | member
+  role          String    @default("member")
   bio           String?
   phone         String?
   organization  String?
@@ -78,9 +78,9 @@ model Event {
   price       Float    @default(0)
   currency    String   @default("PKR")
   capacity    Int?
-  status      String   @default("draft") // draft | published | cancelled
+  status      String   @default("draft")
   featured    Boolean  @default(false)
-  category    String   @default("workshop") // workshop | conference | seminar | webinar
+  category    String   @default("workshop")
   authorId    String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -98,7 +98,7 @@ model BlogPost {
   image       String?
   tags        String   @default("[]")
   category    String   @default("general")
-  status      String   @default("draft") // draft | published
+  status      String   @default("draft")
   featured    Boolean  @default(false)
   views       Int      @default(0)
   authorId    String
@@ -114,7 +114,7 @@ model GalleryItem {
   title       String
   description String?
   imageUrl    String
-  category    String   @default("general") // workshop | event | team | media
+  category    String   @default("general")
   featured    Boolean  @default(false)
   sortOrder   Int      @default(0)
   createdAt   DateTime @default(now())
@@ -130,11 +130,11 @@ model Registration {
   email           String
   phone           String?
   organization    String?
-  membershipType  String   @default("general") // general | student | professional | corporate
+  membershipType  String   @default("general")
   amount          Float
   currency        String   @default("PKR")
-  paymentMethod   String?  // stripe | paypal
-  paymentStatus   String   @default("pending") // pending | completed | failed | refunded
+  paymentMethod   String?
+  paymentStatus   String   @default("pending")
   paymentId       String?
   paymentIntentId String?
   notes           String?

@@ -65,7 +65,25 @@
     @apply text-gold-500;
   }
   .prose-dark {
-    @apply prose prose-invert prose-headings:text-gold-400 prose-a:text-gold-400;
+    @apply text-navy-300 leading-relaxed;
+  }
+  .prose-dark h1, .prose-dark h2, .prose-dark h3, .prose-dark h4 {
+    @apply font-heading font-bold text-gold-400 mt-6 mb-3;
+  }
+  .prose-dark p {
+    @apply mb-4;
+  }
+  .prose-dark a {
+    @apply text-gold-400 underline hover:text-gold-300;
+  }
+  .prose-dark ul, .prose-dark ol {
+    @apply mb-4 pl-5;
+  }
+  .prose-dark li {
+    @apply mb-1;
+  }
+  .prose-dark blockquote {
+    @apply border-l-4 border-gold-500 pl-4 italic text-navy-400 my-4;
   }
 }
 
