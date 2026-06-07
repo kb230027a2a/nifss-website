@@ -1,0 +1,172 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  password      String?
+  image         String?
+  role          String    @default("member") // admin | power_user | member
+  bio           String?
+  phone         String?
+  organization  String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts      Account[]
+  sessions      Session[]
+  registrations Registration[]
+  blogPosts     BlogPost[]
+  events        Event[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String
+  content     String
+  image       String?
+  location    String?
+  venue       String?
+  startDate   DateTime
+  endDate     DateTime?
+  price       Float    @default(0)
+  currency    String   @default("PKR")
+  capacity    Int?
+  status      String   @default("draft") // draft | published | cancelled
+  featured    Boolean  @default(false)
+  category    String   @default("workshop") // workshop | conference | seminar | webinar
+  authorId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  author        User           @relation(fields: [authorId], references: [id])
+  registrations Registration[]
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String
+  content     String
+  image       String?
+  tags        String   @default("[]")
+  category    String   @default("general")
+  status      String   @default("draft") // draft | published
+  featured    Boolean  @default(false)
+  views       Int      @default(0)
+  authorId    String
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  author User @relation(fields: [authorId], references: [id])
+}
+
+model GalleryItem {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  imageUrl    String
+  category    String   @default("general") // workshop | event | team | media
+  featured    Boolean  @default(false)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Registration {
+  id              String   @id @default(cuid())
+  userId          String?
+  eventId         String?
+  firstName       String
+  lastName        String
+  email           String
+  phone           String?
+  organization    String?
+  membershipType  String   @default("general") // general | student | professional | corporate
+  amount          Float
+  currency        String   @default("PKR")
+  paymentMethod   String?  // stripe | paypal
+  paymentStatus   String   @default("pending") // pending | completed | failed | refunded
+  paymentId       String?
+  paymentIntentId String?
+  notes           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user  User?  @relation(fields: [userId], references: [id])
+  event Event? @relation(fields: [eventId], references: [id])
+}
+
+model TeamMember {
+  id          String  @id @default(cuid())
+  name        String
+  title       String
+  bio         String?
+  image       String?
+  email       String?
+  linkedin    String?
+  twitter     String?
+  sortOrder   Int     @default(0)
+  featured    Boolean @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
