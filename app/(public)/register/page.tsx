@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
@@ -25,6 +25,14 @@ type FormData = {
 type PaymentMethod = "stripe" | "paypal" | null;
 
 export default function RegisterPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-navy-950 flex items-center justify-center text-navy-400">Loading...</div>}>
+      <RegisterContent />
+    </Suspense>
+  );
+}
+
+function RegisterContent() {
   const { data: session } = useSession();
   const searchParams = useSearchParams();
   const eventId = searchParams.get("event");
