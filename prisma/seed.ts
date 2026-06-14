@@ -33,7 +33,7 @@ async function main() {
   // Seed team members
   const team = [
     {
-      name: "Aliyan Farhan Anjum",
+      name: "TBC",
       title: "Founder & Chairman",
       bio: "With an extensive background in forensic science and strategic studies, Aliyan leads NIFSS with a vision to transform forensic practices in Pakistan.",
       sortOrder: 1,
