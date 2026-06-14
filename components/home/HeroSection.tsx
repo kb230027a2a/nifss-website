@@ -46,11 +46,8 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="font-heading text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-6"
           >
-            <span className="text-white">Advancing</span>
-            <br />
-            <span className="text-gold-500">Forensic Science</span>
-            <br />
-            <span className="text-white">Across Pakistan</span>
+            <span className="text-white">Welcome to </span>
+            <span className="text-gold-500">NIFSS</span>
           </motion.h1>
 
           {/* Subtext */}
